@@ -1,6 +1,7 @@
 package datastorage;
 
 import model.Pfleger;
+import model.Treatment;
 import utils.DateConverter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static utils.PasswordEncryption.encryptPassword;
 
@@ -17,8 +19,24 @@ public class PflegerDAO extends DAOimp<Pfleger> {
 
     public PflegerDAO(Connection conn){
         super(conn);
+        is10YearPassed();
     }
 
+    private void is10YearPassed(){
+        PflegerDAO dao = DAOFactory.getDAOFactory().createPflegerDAO();
+        try {
+            List<Pfleger> checkList = dao.readAll();
+            for(int i=0;i<checkList.toArray().length;i++){
+                if(checkList.get(i).getIsLocked().equals("true")){
+                    if(checkList.get(i).getDateOfLocking().getYear()+10<=LocalDate.now().getYear()){
+                        dao.deleteById(checkList.get(i).getPfid());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      *      * generates a <code>select</code>-Statement for a given key
      * @param key for which a specific SELECTis to be created

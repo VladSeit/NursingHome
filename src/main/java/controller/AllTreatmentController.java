@@ -232,12 +232,14 @@ public class    AllTreatmentController {
         Treatment t = this.tableviewContent.remove(id);
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         t.setIsLocked("true");
+        t.setDateOfLocking(LocalDate.now());
         try {
             dao.update(t);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     public long getLastTreatmentID(){
         return tableView.getItems().get(tableView.getItems().toArray().length-1).getTid();

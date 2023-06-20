@@ -15,8 +15,24 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     public TreatmentDAO(Connection conn) {
         super(conn);
+        is10YearPassed();
     }
 
+    private void is10YearPassed(){
+        TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
+        try {
+            List<Treatment> checkList = dao.readAll();
+            for(int i=0;i<checkList.toArray().length;i++){
+                if(checkList.get(i).getIsLocked().equals("true")){
+                    if(checkList.get(i).getDateOfLocking().getYear()+10<LocalDate.now().getYear()){
+                        dao.deleteByPid(checkList.get(i).getTid());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected String getCreateStatementString(Treatment treatment) {
         return String.format("INSERT INTO treatment (tid,pid, treatment_date, begin, end, description, remarks,pfid,pfleger_surname,islocked,dateoflocking) VALUES " +

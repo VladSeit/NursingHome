@@ -1,12 +1,14 @@
 package datastorage;
 
 import model.Patient;
+import model.Treatment;
 import utils.DateConverter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implements the Interface <code>DAOImp</code>. Overrides methods to generate specific patient-SQL-queries.
@@ -19,6 +21,23 @@ public class  PatientDAO extends DAOimp<Patient> {
      */
     public PatientDAO(Connection conn) {
         super(conn);
+        is10YearPassed();
+    }
+
+    private void is10YearPassed(){
+        PatientDAO dao = DAOFactory.getDAOFactory().createPatientDAO();
+        try {
+            List<Patient> checkList = dao.readAll();
+            for(int i=0;i<checkList.toArray().length;i++){
+                if(checkList.get(i).isLocked().equals("true")){
+                    if(checkList.get(i).getDateOfLocking().getYear()+10<LocalDate.now().getYear()){
+                        dao.deleteById(checkList.get(i).getPid());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

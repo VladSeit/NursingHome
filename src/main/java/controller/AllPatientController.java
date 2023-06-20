@@ -209,6 +209,7 @@ public class AllPatientController {
         Patient p = this.tableviewContent.remove(id);
         PatientDAO dao = DAOFactory.getDAOFactory().createPatientDAO();
         p.setLocked("true");
+        p.setDateOfLocking(LocalDate.now());
         try {
             dao.update(p);
         } catch (SQLException e) {

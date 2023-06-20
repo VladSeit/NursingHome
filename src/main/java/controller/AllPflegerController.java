@@ -15,6 +15,7 @@ import model.Pfleger;
 import model.Treatment;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class AllPflegerController {
@@ -63,6 +64,7 @@ public class AllPflegerController {
         Pfleger p = this.tableviewContent.remove(id);
         PflegerDAO dao = DAOFactory.getDAOFactory().createPflegerDAO();
         p.setIsLocked("true");
+        p.setDateOfLocking(LocalDate.now());
         try {
             dao.update(p);
         } catch (SQLException e) {
