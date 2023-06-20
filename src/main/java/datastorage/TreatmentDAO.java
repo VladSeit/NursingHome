@@ -17,7 +17,9 @@ public class TreatmentDAO extends DAOimp<Treatment> {
         super(conn);
         is10YearPassed();
     }
-
+    /**
+     * Check all archived treatments, if 10 years after archive passed
+     * */
     private void is10YearPassed(){
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {

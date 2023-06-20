@@ -21,7 +21,9 @@ public class PflegerDAO extends DAOimp<Pfleger> {
         super(conn);
         is10YearPassed();
     }
-
+    /**
+     * Check all archived pfleger, if 10 years after archive passed
+     * */
     private void is10YearPassed(){
         PflegerDAO dao = DAOFactory.getDAOFactory().createPflegerDAO();
         try {
@@ -38,7 +40,7 @@ public class PflegerDAO extends DAOimp<Pfleger> {
         }
     }
     /**
-     *      * generates a <code>select</code>-Statement for a given key
+     * generates a <code>select</code>-Statement for a given key
      * @param key for which a specific SELECTis to be created
      * @return <code>String</code> with the generated SQL.
      */
@@ -133,13 +135,28 @@ public class PflegerDAO extends DAOimp<Pfleger> {
     }
 
 
+    /**
+     * Check, if the @param loginValue in database is. Statement.
+     *
+     * @return
+     */
     private String getLoginFromDatabase(String loginValue){
         return String.format("SELECT login from PFLEGER where Login='"+loginValue+"'");
     }
+    /**
+     * Check, if the @param passwordValue in database is. Statement.
+     *
+     * @return
+     */
     private String getPasswordFromDatabase(String passwordValue){
         return String.format("SELECT password from PFLEGER where password='"+passwordValue+"'");
     }
 
+    /**
+     * Check, if the @param login in database is
+     *
+     * @return true of false
+     */
     public boolean checkPflegerLogin(String login) throws SQLException {
 
         Statement st = conn.createStatement();
@@ -151,6 +168,11 @@ public class PflegerDAO extends DAOimp<Pfleger> {
             return false;
         }
     }
+    /**
+     * Check, if the @param password in database is
+     *
+     * @return true of false
+     */
     public boolean checkPflegerPassword(String password) throws SQLException {
 
         Statement st = conn.createStatement();
@@ -163,9 +185,19 @@ public class PflegerDAO extends DAOimp<Pfleger> {
         }
     }
 
+    /**
+     * Get pfleger by login. Statement
+     *
+     * @return
+     */
     private String getPflegerByLogintatementString(String login){
         return String.format("SELECT * from PFLEGER where login='"+login+"'");
     }
+    /**
+     * Get pfleger by login
+     *
+     * @return
+     */
     public Pfleger getPflegerByLogin(String login) throws SQLException {
         Statement st = conn.createStatement();
         ResultSet result = st.executeQuery(getPflegerByLogintatementString(login));

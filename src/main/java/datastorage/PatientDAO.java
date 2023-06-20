@@ -24,6 +24,9 @@ public class  PatientDAO extends DAOimp<Patient> {
         is10YearPassed();
     }
 
+    /**
+     * Check all archived patients, if 10 years after archive passed
+     * */
     private void is10YearPassed(){
         PatientDAO dao = DAOFactory.getDAOFactory().createPatientDAO();
         try {
