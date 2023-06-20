@@ -57,8 +57,9 @@ public class NewTreatmentController {
         LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
-        long lastID =controller.getLastTreatmentID();
-       Treatment treatment = new Treatment(lastID+1,patient.getPid(), date,
+        long lastID =controller.getLastTreatmentID()+1;
+        System.out.println(currentPfleger.getPfid());
+       Treatment treatment = new Treatment(lastID,patient.getPid(), date,
                begin, end, description, remarks, currentPfleger.getPfid(),currentPfleger.getSurname(), "false",null);
         createTreatment(treatment);
         controller.readAllAndShowInTableView();

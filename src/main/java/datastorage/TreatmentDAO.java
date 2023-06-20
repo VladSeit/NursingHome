@@ -19,10 +19,10 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected String getCreateStatementString(Treatment treatment) {
-        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks) VALUES " +
-                "(%d, '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getDate(),
+        return String.format("INSERT INTO treatment (tid,pid, treatment_date, begin, end, description, remarks,pfid,pfleger_surname,islocked,dateoflocking) VALUES " +
+                "(%d,%d,'%s', '%s', '%s', '%s', '%s',%d,'%s','%s',null)",treatment.getTid(), treatment.getPid(), treatment.getDate(),
                 treatment.getBegin(), treatment.getEnd(), treatment.getDescription(),
-                treatment.getRemarks());
+                treatment.getRemarks(),treatment.getPfid(),treatment.getPflegerSurname(),treatment.getIsLocked());
     }
 
     @Override
@@ -78,8 +78,8 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     @Override
     protected String getUpdateStatementString(Treatment treatment) {
         return String.format("UPDATE treatment SET pid = %d, treatment_date ='%s', begin = '%s', end = '%s'," +
-                "description = '%s', remarks = '%s' WHERE tid = %d", treatment.getPid(), treatment.getDate(),
-                treatment.getBegin(), treatment.getEnd(), treatment.getDescription(), treatment.getRemarks(),
+                "description = '%s', remarks = '%s',pfid=%d,pfleger_surname='%s',islocked='%s',dateoflocking='%s' WHERE tid = %d", treatment.getPid(), treatment.getDate(),
+                treatment.getBegin(), treatment.getEnd(), treatment.getDescription(), treatment.getRemarks(),treatment.getPfid(),treatment.getPflegerSurname(),treatment.getIsLocked(),treatment.getDateOfLocking(),
                 treatment.getTid());
     }
 

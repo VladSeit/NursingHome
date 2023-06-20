@@ -92,16 +92,16 @@ public class PflegerDAO extends DAOimp<Pfleger> {
     @Override
     protected String getUpdateStatementString(Pfleger pfleger) {
         return String.format("UPDATE pfleger SET firstname = '%s', surname = '%s', dateOfBirth = '%s', login = '%s', " +
-                        "password = '%s' WHERE pfid = %d", pfleger.getFirstName(), pfleger.getSurname(), pfleger.getDateOfBirth(),
-                pfleger.getLogin(), encryptPassword(pfleger.getPassword()), pfleger.getPfid());
+                        "password = '%s', islocked='%s',dateoflocking='%s' WHERE pfid = %d", pfleger.getFirstName(), pfleger.getSurname(), pfleger.getDateOfBirth(),
+                pfleger.getLogin(), encryptPassword(pfleger.getPassword()),pfleger.getIsLocked(),pfleger.getDateOfLocking(),pfleger.getPfid());
     }
 
     @Override
     protected String getCreateStatementString(Pfleger pfleger) {
-        return String.format("INSERT INTO pfleger (pfid, firstname, surname, dateOfBirth, login, password) VALUES " +
-                        "(%d, '%s', '%s', '%s', '%s', '%s')", pfleger.getPfid(), pfleger.getFirstName(),
+        return String.format("INSERT INTO pfleger (pfid, firstname, surname, dateOfBirth, login, password,islocked,dateoflocking) VALUES " +
+                        "(%d, '%s', '%s', '%s', '%s', '%s','%s','%s')", pfleger.getPfid(), pfleger.getFirstName(),
                 pfleger.getSurname(), pfleger.getDateOfBirth(), pfleger.getLogin(),
-                encryptPassword(pfleger.getPassword()));
+                encryptPassword(pfleger.getPassword()),pfleger.getIsLocked(),pfleger.getDateOfLocking());
     }
 
     /**

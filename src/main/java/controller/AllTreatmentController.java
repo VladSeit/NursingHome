@@ -5,11 +5,13 @@ import datastorage.PflegerDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Patient;
@@ -22,10 +24,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static controller.LoginController.currentPfleger;
 import static controller.LoginController.isLogged;
 import static utils.NewMessageWindow.getMessageInTextField;
 
 public class    AllTreatmentController {
+
     @FXML
     private TableView<Treatment> tableView;
     @FXML
@@ -49,7 +53,7 @@ public class    AllTreatmentController {
     @FXML
     private Button btnDelete;
 
-    private ObservableList<Treatment> tableviewContent =
+     private   ObservableList<Treatment> tableviewContent =
             FXCollections.observableArrayList();
     private TreatmentDAO dao;
     private ObservableList<String> myComboBoxData =
@@ -69,6 +73,7 @@ public class    AllTreatmentController {
         this.colEnd.setCellValueFactory(new PropertyValueFactory<Treatment, String>("end"));
         this.colPFID.setCellValueFactory(new PropertyValueFactory<Treatment, String>("pfid"));
         this.colDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
+      
         this.tableView.setItems(this.tableviewContent);
         createComboBoxData();
     }
@@ -80,7 +85,7 @@ public class    AllTreatmentController {
         List<Treatment> allTreatments;
         try {
             allTreatments = dao.readAll();
-            for (Treatment treatment : allTreatments) {
+            for (Treatment treatment: allTreatments) {
                 this.tableviewContent.add(treatment);
             }
         } catch (SQLException e) {
@@ -177,8 +182,8 @@ public class    AllTreatmentController {
 
     @FXML
     public void handleMouseClick(){
-        tableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && (tableView.getSelectionModel().getSelectedItem() != null)) {
+        this.tableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && (this.tableView.getSelectionModel().getSelectedItem() != null)) {
                 int index = this.tableView.getSelectionModel().getSelectedIndex();
                 Treatment treatment = this.tableviewContent.get(index);
 
@@ -227,7 +232,7 @@ public class    AllTreatmentController {
         }
     }
     public long getLastTreatmentID(){
-        return tableView.getItems().get(tableView.getItems().toArray().length-1).getTid();
+        return this.tableView.getItems().get(this.tableView.getItems().toArray().length-1).getTid();
     }
 
 

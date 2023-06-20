@@ -29,7 +29,7 @@ public class LoginController {
     static public boolean isLogged = false;
     static Pfleger currentPfleger;
     PflegerDAO dao;
-    public void initialize() {
+    public void initialize() throws SQLException {
         this.dao= DAOFactory.getDAOFactory().createPflegerDAO();
         logoutButtonInLoginWindow.setVisible(false);
         welcomeLabel.setVisible(false);
