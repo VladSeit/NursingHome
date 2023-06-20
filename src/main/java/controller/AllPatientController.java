@@ -1,6 +1,7 @@
 package controller;
 
 import datastorage.PatientDAO;
+import datastorage.PflegerDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Patient;
+import model.Pfleger;
 import utils.DateConverter;
 import datastorage.DAOFactory;
 import java.sql.SQLException;
@@ -199,6 +201,19 @@ public class AllPatientController {
         }
         readAllAndShowInTableView();
         clearTextfields();
+    }
+
+    @FXML
+    public void lockData(){
+        int id = this.tableView.getSelectionModel().getSelectedIndex();
+        Patient p = this.tableviewContent.remove(id);
+        PatientDAO dao = DAOFactory.getDAOFactory().createPatientDAO();
+        p.setLocked("true");
+        try {
+            dao.update(p);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

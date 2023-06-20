@@ -3,6 +3,7 @@ package controller;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.PflegerDAO;
+import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -52,6 +53,18 @@ public class AllPflegerController {
             for (Pfleger p : allPflegers) {
                 this.tableviewContent.add(p);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void lockData(){
+        int id = this.tableView.getSelectionModel().getSelectedIndex();
+        Pfleger p = this.tableviewContent.remove(id);
+        PflegerDAO dao = DAOFactory.getDAOFactory().createPflegerDAO();
+        p.setIsLocked("true");
+        try {
+            dao.update(p);
         } catch (SQLException e) {
             e.printStackTrace();
         }
