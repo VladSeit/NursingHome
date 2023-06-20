@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="mainAnchorpane" prefHeight="500.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AllTreatmentController">
+<AnchorPane prefHeight="500.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AllTreatmentController">
    <children>
       <TableView fx:id="tableView" editable="true" layoutX="31.0" layoutY="35.0" onMouseClicked="#handleMouseClick" prefHeight="364.0" prefWidth="825.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="80.0">
         <columns>
@@ -21,7 +21,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <HBox layoutX="78.0" layoutY="419.3999938964844" prefHeight="30.0" prefWidth="762.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="15.0">
+      <HBox layoutX="623.0" layoutY="419.3999938964844" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
             <GridPane hgap="10.0" vgap="10.0">
               <columnConstraints>
@@ -44,7 +44,10 @@
                   <Insets />
                </HBox.margin>
             </GridPane>
-            <HBox prefWidth="190.0" spacing="10.0" />
+            <HBox prefWidth="190.0" spacing="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#lockData" prefHeight="26.0" prefWidth="125.0" text="Sperren" />
+               </children></HBox>
          </children>
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefWidth="200.0" spacing="25.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">

@@ -27,6 +27,7 @@
             </Label>
          </children>
       </HBox>
+      <Button layoutX="704.0" layoutY="445.0" mnemonicParsing="false" onAction="#lockData" prefHeight="26.0" prefWidth="117.0" text="Sperren" />
    </children>
    <padding>
       <Insets top="10.0" />
