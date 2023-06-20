@@ -67,6 +67,7 @@ public class PflegerDAO extends DAOimp<Pfleger> {
         ArrayList<Pfleger> list = new ArrayList<Pfleger>();
         Pfleger p = null;
         while (result.next()) {
+            if(result.getString(7).equals("false")){
             LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
             LocalDate dateOfLocking=null;
             if(result.getString(8)!=null) {
@@ -77,6 +78,7 @@ public class PflegerDAO extends DAOimp<Pfleger> {
                     result.getString(5), result.getString(6)
                     , result.getString(7),dateOfLocking);
             list.add(p);
+            }
         }
         return list;
     }
@@ -141,5 +143,23 @@ public class PflegerDAO extends DAOimp<Pfleger> {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    private String getPflegerByLogintatementString(String login){
+        return String.format("SELECT * from PFLEGER where login='"+login+"'");
+    }
+    public Pfleger getPflegerByLogin(String login) throws SQLException {
+        Statement st = conn.createStatement();
+        ResultSet result = st.executeQuery(getPflegerByLogintatementString(login));
+        result.next();
+        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
+        LocalDate dateOfLocking=null;
+        if(result.getString(8)!=null) {
+            dateOfLocking = DateConverter.convertStringToLocalDate(result.getString(8));
+        }
+            return  new Pfleger(result.getInt(1), result.getString(2),
+                    result.getString(3), date,
+                    result.getString(5), result.getString(6)
+                    , result.getString(7),dateOfLocking);
     }
 }

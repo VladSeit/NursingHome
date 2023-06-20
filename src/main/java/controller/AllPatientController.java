@@ -80,6 +80,8 @@ public class AllPatientController {
 
         //Anzeigen der Daten
         this.tableView.setItems(this.tableviewContent);
+
+        System.out.println(tableView.getItems().get(tableView.getItems().toArray().length-1).getPid());
     }
 
     /**
@@ -188,9 +190,9 @@ public class AllPatientController {
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
         String carelevel = this.txtCarelevel.getText();
         String room = this.txtRoom.getText();
-
+        long lastID = tableView.getItems().get(tableView.getItems().toArray().length-1).getPid();
         try {
-            Patient p = new Patient(firstname, surname, date, carelevel, room,"false",null);
+            Patient p = new Patient(lastID+1,firstname, surname, date, carelevel, room,"false",null);
             dao.create(p);
         } catch (SQLException e) {
             e.printStackTrace();

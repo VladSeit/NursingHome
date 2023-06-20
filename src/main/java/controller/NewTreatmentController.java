@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static controller.LoginController.currentPfleger;
+
 public class NewTreatmentController {
     @FXML
     private Label lblSurname;
@@ -55,8 +57,9 @@ public class NewTreatmentController {
         LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date,
-                begin, end, description, remarks, "false",null);
+        long lastID =controller.getLastTreatmentID();
+       Treatment treatment = new Treatment(lastID+1,patient.getPid(), date,
+               begin, end, description, remarks, currentPfleger.getPfid(),currentPfleger.getSurname(), "false",null);
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();

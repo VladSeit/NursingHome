@@ -50,9 +50,14 @@ public class  PatientDAO extends DAOimp<Patient> {
     protected Patient getInstanceFromResultSet(ResultSet result) throws SQLException {
         Patient p = null;
         LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
+        LocalDate dateOfLocking = null;
+        if (result.getString(8) != null) {
+            dateOfLocking = DateConverter.convertStringToLocalDate(result.getString(8));
+        }
         p = new Patient(result.getInt(1), result.getString(2),
                 result.getString(3), date, result.getString(5),
-                result.getString(6));
+                result.getString(6), result.getString(7),
+                        dateOfLocking);
         return p;
     }
 
@@ -75,11 +80,18 @@ public class  PatientDAO extends DAOimp<Patient> {
         ArrayList<Patient> list = new ArrayList<Patient>();
         Patient p = null;
         while (result.next()) {
-            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
-            p = new Patient(result.getInt(1), result.getString(2),
-                    result.getString(3), date,
-                    result.getString(5), result.getString(6));
-            list.add(p);
+         if(result.getString(7).equals("false")) {
+             LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
+             LocalDate dateOfLocking = null;
+             if (result.getString(8) != null) {
+                 dateOfLocking = DateConverter.convertStringToLocalDate(result.getString(8));
+             }
+             p = new Patient(result.getInt(1), result.getString(2),
+                     result.getString(3), date,
+                     result.getString(5), result.getString(6), result.getString(7),
+                     dateOfLocking);
+             list.add(p);
+         }
         }
         return list;
     }

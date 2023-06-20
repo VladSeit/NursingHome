@@ -22,6 +22,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static controller.LoginController.isLogged;
+import static utils.NewMessageWindow.getMessageInTextField;
+
 public class    AllTreatmentController {
     @FXML
     private TableView<Treatment> tableView;
@@ -152,9 +155,14 @@ public class    AllTreatmentController {
     @FXML
     public void handleNewTreatment() {
         try{
-            String p = this.comboBox.getSelectionModel().getSelectedItem();
-            Patient patient = searchInList(p);
-            newTreatmentWindow(patient);
+            if(isLogged)  {
+                String p = this.comboBox.getSelectionModel().getSelectedItem();
+                Patient patient = searchInList(p);
+                newTreatmentWindow(patient);
+            }
+            else{
+                getMessageInTextField("Sie sollen angemeldet sein");
+            }
         }
         catch(NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -217,6 +225,9 @@ public class    AllTreatmentController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    public long getLastTreatmentID(){
+        return tableView.getItems().get(tableView.getItems().toArray().length-1).getTid();
     }
 
 

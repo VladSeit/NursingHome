@@ -18,19 +18,18 @@ public class Treatment {
     private LocalDate dateOfLocking;
 
     public Treatment(long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, String isLocked, LocalDate dateOfLocking) {
+                     LocalTime end, String description, String remarks) {
         this.pid = pid;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
-        this.isLocked=isLocked;
-        this.dateOfLocking=dateOfLocking;
     }
 
     public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, long pfid, String pflegerSurname) {
+                     LocalTime end, String description, String remarks, long pfid,
+                     String pflegerSurname,String isLocked, LocalDate dateOfLocking) {
         this.tid = tid;
         this.pid = pid;
         this.date = date;
@@ -40,6 +39,8 @@ public class Treatment {
         this.remarks = remarks;
         this.pfid=pfid;
         this.pflegerSurname=pflegerSurname;
+        this.isLocked=isLocked;
+        this.dateOfLocking=dateOfLocking;
     }
 
     public long getTid() {

@@ -35,9 +35,14 @@ public class TreatmentDAO extends DAOimp<Treatment> {
         LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
         LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
         LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
+        LocalDate dateOfLocking=null;
+        if(result.getString(8)!=null) {
+            dateOfLocking = DateConverter.convertStringToLocalDate(result.getString(8));
+        }
         Treatment m = new Treatment(result.getLong(1), result.getLong(2),
                 date, begin, end, result.getString(6), result.getString(7),
-                result.getInt(8),result.getString(9));
+                result.getInt(8),result.getString(9),
+                result.getString(10),dateOfLocking);
         return m;
     }
 
@@ -51,13 +56,21 @@ public class TreatmentDAO extends DAOimp<Treatment> {
         ArrayList<Treatment> list = new ArrayList<Treatment>();
         Treatment t = null;
         while (result.next()) {
-            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
-            LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
-            LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-            t = new Treatment(result.getLong(1), result.getLong(2),
-                    date, begin, end, result.getString(6), result.getString(7),
-                    result.getInt(8),result.getString(9));
-            list.add(t);
+            if(result.getString(10).equals("false")) {
+
+                LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
+                LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
+                LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
+                LocalDate dateOfLocking = null;
+                if (result.getString(11) != null) {
+                    dateOfLocking = DateConverter.convertStringToLocalDate(result.getString(11));
+                }
+                t = new Treatment(result.getLong(1), result.getLong(2),
+                        date, begin, end, result.getString(6), result.getString(7),
+                        result.getInt(8), result.getString(9),
+                        result.getString(10), dateOfLocking);
+                list.add(t);
+            }
         }
         return list;
     }

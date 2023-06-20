@@ -49,7 +49,7 @@ public class LoginController {
             loginButton.setDisable(true);
             logoutButtonInLoginWindow.setVisible(true);
             getMessageInTextField("Sie haben angemeldet");
-
+            currentPfleger = dao.getPflegerByLogin(login);
         }
         else {
             getMessageInTextField("Falsche Einlogdaten");
@@ -70,5 +70,6 @@ public class LoginController {
         passwordTextField.setEditable(true);
         loginButton.setDisable(false);
         logoutButtonInLoginWindow.setVisible(false);
+        currentPfleger=null;
     }
 }
