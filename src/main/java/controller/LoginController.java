@@ -29,12 +29,22 @@ public class LoginController {
     static public boolean isLogged = false;
     static Pfleger currentPfleger;
     PflegerDAO dao;
+
+    /**
+     * initialize login window
+     * @throws SQLException
+     */
     public void initialize() throws SQLException {
         this.dao= DAOFactory.getDAOFactory().createPflegerDAO();
         logoutButtonInLoginWindow.setVisible(false);
         welcomeLabel.setVisible(false);
     }
 
+    /**
+     * Methode for LoginWindowView.fxml. Logs a users, if the login and the password were correct
+     * @throws SQLException
+     */
+    @FXML
     public void handleLogin() throws SQLException {
         String login = loginTextField.getText();
         String password = passwordTextField.getText();
@@ -56,6 +66,13 @@ public class LoginController {
         }
     }
 
+    /**
+     * Check, if the login and password from textfields were correct
+     * @param login
+     * @param password
+     * @return
+     * @throws SQLException
+     */
     public boolean checkLoginData(String login, String password) throws SQLException{
             if (dao.checkPflegerLogin(login)) {
                 return dao.checkPflegerPassword(password);
@@ -63,6 +80,10 @@ public class LoginController {
             return false;
     }
 
+    /**
+     * Logout the user
+     */
+    @FXML
     public void handleLogout(){
         isLogged=false;
         welcomeLabel.setVisible(false);

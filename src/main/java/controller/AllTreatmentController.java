@@ -226,6 +226,9 @@ public class    AllTreatmentController {
             e.printStackTrace();
         }
     }
+    /**
+     * archive selected treatment in tableview
+     */
     @FXML
     public void lockData(){
         int id = this.tableView.getSelectionModel().getSelectedIndex();
@@ -240,7 +243,9 @@ public class    AllTreatmentController {
         }
     }
 
-
+    /**
+     * Get id of last treatment
+     */
     public long getLastTreatmentID(){
         return tableView.getItems().get(tableView.getItems().toArray().length-1).getTid();
     }

@@ -33,6 +33,10 @@ public class AllPflegerController {
     private ObservableList<Pfleger> tableviewContent = FXCollections.observableArrayList();
     private PflegerDAO dao;
 
+    /**
+     * Initializes the corresponding fields. Is called as soon as the corresponding FXML file is to be displayed.
+     *
+     */
     public void initialize() {
 
         readAllAndShowInTableView();
@@ -45,6 +49,9 @@ public class AllPflegerController {
 
     }
 
+    /**
+     * Get all pflegern from the datenbank and show it in tableview
+     */
     private void readAllAndShowInTableView() {
         this.tableviewContent.clear();
         this.dao = DAOFactory.getDAOFactory().createPflegerDAO();
@@ -58,6 +65,10 @@ public class AllPflegerController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * archive selected pfleger in tableview
+     */
     @FXML
     public void lockData(){
         int id = this.tableView.getSelectionModel().getSelectedIndex();

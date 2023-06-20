@@ -35,24 +35,17 @@ public class MainWindowController {
 
     }
 
+
     @FXML
     private void handleShowLoginWindow(){
-        if(!isLogged){
+
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/LoginWindowView.fxml"));
             try {
                 mainBorderPane.setCenter(loader.load());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
-        if(isLogged){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/LoggedWindowView.fxml"));
-            try {
-                mainBorderPane.setCenter(loader.load());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+
     }
 
     @FXML

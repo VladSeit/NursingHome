@@ -202,7 +202,9 @@ public class AllPatientController {
         readAllAndShowInTableView();
         clearTextfields();
     }
-
+    /**
+     * archive selected patient in tableview
+     */
     @FXML
     public void lockData(){
         int id = this.tableView.getSelectionModel().getSelectedIndex();
