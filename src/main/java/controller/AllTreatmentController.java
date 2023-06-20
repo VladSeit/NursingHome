@@ -1,6 +1,7 @@
 package controller;
 
 import datastorage.PatientDAO;
+import datastorage.PflegerDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,10 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Patient;
+import model.Pfleger;
 import model.Treatment;
 import datastorage.DAOFactory;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,8 @@ public class    AllTreatmentController {
     @FXML
     private TableColumn<Treatment, String> colDescription;
     @FXML
+    private TableColumn<Treatment,String> colPFID;
+    @FXML
     private ComboBox<String> comboBox;
     @FXML
     private Button btnNewTreatment;
@@ -47,19 +52,19 @@ public class    AllTreatmentController {
     private ObservableList<String> myComboBoxData =
             FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
-    private Main main;
+
 
     public void initialize() {
         readAllAndShowInTableView();
         comboBox.setItems(myComboBoxData);
         comboBox.getSelectionModel().select(0);
-        this.main = main;
 
         this.colID.setCellValueFactory(new PropertyValueFactory<Treatment, Integer>("tid"));
         this.colPid.setCellValueFactory(new PropertyValueFactory<Treatment, Integer>("pid"));
         this.colDate.setCellValueFactory(new PropertyValueFactory<Treatment, String>("date"));
         this.colBegin.setCellValueFactory(new PropertyValueFactory<Treatment, String>("begin"));
         this.colEnd.setCellValueFactory(new PropertyValueFactory<Treatment, String>("end"));
+        this.colPFID.setCellValueFactory(new PropertyValueFactory<Treatment, String>("pfid"));
         this.colDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
         this.tableView.setItems(this.tableviewContent);
         createComboBoxData();
@@ -157,6 +162,8 @@ public class    AllTreatmentController {
             alert.setHeaderText("Patient für die Behandlung fehlt!");
             alert.setContentText("Wählen Sie über die Combobox einen Patienten aus!");
             alert.showAndWait();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -172,7 +179,7 @@ public class    AllTreatmentController {
         });
     }
 
-    public void newTreatmentWindow(Patient patient){
+    public void newTreatmentWindow(Patient patient) throws SQLException {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/NewTreatmentView.fxml"));
             AnchorPane pane = loader.load();
@@ -211,4 +218,7 @@ public class    AllTreatmentController {
             e.printStackTrace();
         }
     }
+
+
+
 }

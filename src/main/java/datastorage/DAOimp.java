@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public abstract class DAOimp<T> implements DAO<T>{
         st.executeUpdate(getDeleteStatementString(key));
     }
 
+
     protected abstract String getCreateStatementString(T t);
 
     protected abstract String getReadByIDStatementString(long key);
@@ -66,4 +68,5 @@ public abstract class DAOimp<T> implements DAO<T>{
     protected abstract String getUpdateStatementString(T t);
 
     protected abstract String getDeleteStatementString(long key);
+
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Implements the Interface <code>DAOImp</code>. Overrides methods to generate specific patient-SQL-queries.
  */
-public class PatientDAO extends DAOimp<Patient> {
+public class  PatientDAO extends DAOimp<Patient> {
 
     /**
      * constructs Onbject. Calls the Constructor from <code>DAOImp</code> to store the connection.
@@ -31,10 +31,9 @@ public class PatientDAO extends DAOimp<Patient> {
         return String.format("INSERT INTO patient (firstname, surname, dateOfBirth, carelevel, roomnumber) VALUES ('%s', '%s', '%s', '%s', '%s')",
                 patient.getFirstName(), patient.getSurname(), patient.getDateOfBirth(), patient.getCareLevel(), patient.getRoomnumber());
     }
-
     /**
-     * generates a <code>select</code>-Statement for a given key
-     * @param key for which a specific SELECTis to be created
+     *      * generates a <code>select</code>-Statement for a given key
+     * @param key for which a specific SELECT is to be created
      * @return <code>String</code> with the generated SQL.
      */
     @Override
@@ -106,4 +105,5 @@ public class PatientDAO extends DAOimp<Patient> {
     protected String getDeleteStatementString(long key) {
         return String.format("Delete FROM patient WHERE pid=%d", key);
     }
+
 }

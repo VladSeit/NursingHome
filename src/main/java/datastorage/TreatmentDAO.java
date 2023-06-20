@@ -36,7 +36,8 @@ public class TreatmentDAO extends DAOimp<Treatment> {
         LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
         LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
         Treatment m = new Treatment(result.getLong(1), result.getLong(2),
-                date, begin, end, result.getString(6), result.getString(7));
+                date, begin, end, result.getString(6), result.getString(7),
+                result.getInt(8),result.getString(9));
         return m;
     }
 
@@ -54,7 +55,8 @@ public class TreatmentDAO extends DAOimp<Treatment> {
             LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
             LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
             t = new Treatment(result.getLong(1), result.getLong(2),
-                    date, begin, end, result.getString(6), result.getString(7));
+                    date, begin, end, result.getString(6), result.getString(7),
+                    result.getInt(8),result.getString(9));
             list.add(t);
         }
         return list;
@@ -89,5 +91,30 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     public void deleteByPid(long key) throws SQLException {
         Statement st = conn.createStatement();
         st.executeUpdate(String.format("Delete FROM treatment WHERE pid= %d", key));
+    }
+
+    // true (Behandlung ist in der letzeten 10 Jahren) -> sperren  || false (Behandlung ist mehr als 10 Jahren duchgefuehrt)-> loeschen
+    public boolean checkValidityTreatment(Treatment tr) throws SQLException {
+        String query = "SELECT COUNT(*) FROM treatment WHERE CAST(DATEDIFF(CURDATE(), TREATMENT.TREATMENT_DATE)/365.25 as int ) <= 10 AND tid= %d ";
+        Statement st = conn.createStatement();
+        ResultSet result = st.executeQuery(String.format(query, tr.getTid()));
+        result.next();
+        if (result.getInt(1) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void lockTreatment(Treatment tr) throws SQLException {
+        Statement st = conn.createStatement();
+        st.executeUpdate(String.format("UPDATE treatment SET locked = 'y' WHERE tid = %d",
+                tr.getTid()));
+    }
+
+    // Delete invalid treatments (Validity date 10 years)
+    public void deleteInvalidTreatments() throws SQLException {
+        Statement st = conn.createStatement();
+        st.executeUpdate(String.format("Delete FROM treatment WHERE CAST(DATEDIFF(CURDATE(), TREATMENT.TREATMENT_DATE)/365.25 as int ) > 10 AND locked = locked = 'y' "));
     }
 }

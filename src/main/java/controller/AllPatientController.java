@@ -190,7 +190,7 @@ public class AllPatientController {
         String room = this.txtRoom.getText();
 
         try {
-            Patient p = new Patient(firstname, surname, date, carelevel, room);
+            Patient p = new Patient(firstname, surname, date, carelevel, room,"false",null);
             dao.create(p);
         } catch (SQLException e) {
             e.printStackTrace();
